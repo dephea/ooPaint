@@ -33,7 +33,7 @@ namespace ProjectOOP
 
         private void cursor_Click(object sender, EventArgs e)
         {
-
+            index = 1;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -45,5 +45,36 @@ namespace ProjectOOP
         {
 
         }
+
+        private void pic_MouseClick(object sender, MouseEventArgs e)
+        {
+            ////
+        }
+        private void pic_MouseDown(object sender, MouseEventArgs e)
+        {
+            paint = true;
+            py = e.Location;
+        }
+
+        private void pic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (paint)
+            {
+                if (index == 1)
+                {
+                    px = e.Location;
+                    g.DrawLine(p, px, py);
+                    py = px;
+
+                }
+            }
+            pic.Refresh();
+        }
+
+        private void pic_MouseUp(object sender, MouseEventArgs e)
+        {
+            paint = false;
+        }
+
     }
 }
