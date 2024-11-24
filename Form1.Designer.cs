@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            eraserBtn = new Button();
             cursor = new Button();
             color = new Button();
             button1 = new Button();
@@ -41,6 +42,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.AppWorkspace;
+            panel1.Controls.Add(eraserBtn);
             panel1.Controls.Add(cursor);
             panel1.Controls.Add(color);
             panel1.Controls.Add(button1);
@@ -51,6 +53,20 @@
             panel1.Size = new Size(778, 110);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
+            // 
+            // eraserBtn
+            // 
+            eraserBtn.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 192);
+            eraserBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 128, 128);
+            eraserBtn.FlatStyle = FlatStyle.Flat;
+            eraserBtn.ForeColor = Color.White;
+            eraserBtn.Location = new Point(300, 12);
+            eraserBtn.Name = "eraserBtn";
+            eraserBtn.Size = new Size(114, 38);
+            eraserBtn.TabIndex = 3;
+            eraserBtn.Text = "Eraser";
+            eraserBtn.UseVisualStyleBackColor = true;
+            eraserBtn.Click += eraser_Click;
             // 
             // cursor
             // 
@@ -138,5 +154,6 @@
         private Button button1;
         private PictureBox pic;
         private Button cursor;
+        private Button eraserBtn;
     }
 }

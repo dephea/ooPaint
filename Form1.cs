@@ -2,24 +2,28 @@ namespace ProjectOOP
 {
     public partial class Form1 : Form
     {
+
+        private Graphics g;
+        private Canvas myCanvas;
+        private Tool tool;
+        private Pencil pencil;
+        private Eraser eraser;
+
+
+        bool paint = false;
+        Point px, py;
+
         public Form1()
         {
             InitializeComponent();
 
-            this.Width = 900;
-            this.Height = 700;
-            bm = new Bitmap(pic.Width, pic.Height);
-            g = Graphics.FromImage(bm);
-            g.Clear(Color.Green);
-            pic.Image = bm;
+            myCanvas = new Canvas(pic.Width, pic.Height);
+            pic.Image = myCanvas.bitmap;
+            g = myCanvas.graphics;
+            pencil = new Pencil(Color.Black, 5);
+            eraser = new Eraser(5);
+            tool = pencil;
         }
-
-        Bitmap bm;
-        Graphics g;
-        bool paint = false;
-        Point px, py;
-        Pen p = new Pen(Color.Black, 1);
-        int index;
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -33,7 +37,7 @@ namespace ProjectOOP
 
         private void cursor_Click(object sender, EventArgs e)
         {
-            index = 1;
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -53,20 +57,19 @@ namespace ProjectOOP
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
+            px = e.Location;
             py = e.Location;
+            tool.Draw(g, px, px);
+            pic.Invalidate();
         }
 
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
             if (paint)
             {
-                if (index == 1)
-                {
-                    px = e.Location;
-                    g.DrawLine(p, px, py);
-                    py = px;
-
-                }
+                px = e.Location;
+                tool.Draw(g, px, py);
+                py = px;
             }
             pic.Refresh();
         }
@@ -76,5 +79,9 @@ namespace ProjectOOP
             paint = false;
         }
 
+        private void eraser_Click(object sender, EventArgs e)
+        {
+            tool = eraser;
+        }
     }
 }
