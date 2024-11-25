@@ -23,6 +23,12 @@ namespace ProjectOOP
             pen.Color = this.color;
         }
 
+        public void SetWidth(float width)
+        {
+            this.width = width;
+            pen.Width = this.width;
+        }
+
         public abstract void Draw(Graphics g, Point start, Point end);
     }
 }
