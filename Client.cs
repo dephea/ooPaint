@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SimpleTCP;
 
 namespace ProjectOOP
@@ -33,5 +36,52 @@ namespace ProjectOOP
             client.Disconnect();
             Console.WriteLine("Disconnected from the server.");
         }
+
+        public void SendAction(Tool tool, Point start, Point end)
+        {
+            try
+            {
+
+                RemoteAction action = new RemoteAction(tool, start, end);
+
+
+                string jsonAction = JsonConvert.SerializeObject(action);
+
+
+                if (IsValidJson(jsonAction))
+                {
+                    byte[] data = Encoding.UTF8.GetBytes(jsonAction);
+
+                    Debug.WriteLine(jsonAction);
+
+                    client.WriteLine(jsonAction);
+
+                    Debug.WriteLine("Успешно отправил");
+                }
+                else
+                {
+                    Debug.WriteLine("Ошибка: Некорректный JSON");
+                }
+            }
+            catch (JsonSerializationException ex)
+            {
+                Debug.WriteLine("Ошибка сериализации: " + ex.Message);
+            }
+        }
+
+        
+        private bool IsValidJson(string str)
+        {
+            try
+            {
+                JToken.Parse(str);
+                return true;
+            }
+            catch (JsonReaderException)
+            {
+                return false;
+            }
+        }
+
     }
 }

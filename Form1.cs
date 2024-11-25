@@ -37,12 +37,15 @@ namespace ProjectOOP
             {
                 server = new Server();
                 server.StartServer(5000);
+                server.OnActionReceived += ReceiveAction;
             }
             else
             {
                 client = new Client();
                 client.Connect("127.0.0.1", 5000);
             }
+
+
 
         }
 
@@ -86,7 +89,14 @@ namespace ProjectOOP
             px = e.Location;
             py = e.Location;
             tool.Draw(g, px, px);
-            pic.Invalidate();
+
+            if (!Utils.isHost)
+            {
+                client.SendAction(tool, px, px);
+            }
+            
+
+            pic.Refresh();
         }
 
         private void pic_MouseMove(object sender, MouseEventArgs e)
@@ -95,6 +105,10 @@ namespace ProjectOOP
             {
                 px = e.Location;
                 tool.Draw(g, px, py);
+                if (!Utils.isHost)
+                {
+                    client.SendAction(tool, px, py);
+                }
                 py = px;
             }
             pic.Refresh();
@@ -136,6 +150,45 @@ namespace ProjectOOP
 
         private void eraserBtn_MouseDown(object sender, MouseEventArgs e)
         {
+        }
+
+        private void ReceiveAction(RemoteAction action)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ProcessRemoteAction(action)));
+            }
+            else
+            {
+                ProcessRemoteAction(action);
+            }
+        }
+
+
+        private void ProcessRemoteAction(RemoteAction action)
+        {
+
+            if (action == null) return;
+
+            Tool tool;
+
+            if (action.title == "Pencil")
+            {
+                tool = new Pencil(action.color, action.width);
+            }
+            else if (action.title == "Eraser")
+            {
+                tool = new Eraser(action.width);
+            }
+            else
+            {
+                Debug.WriteLine("Received unknown tool: {action.title}");
+                return;
+            }
+
+            tool.Draw(g, action.start, action.end);
+
+            pic.Refresh();
         }
     }
 }

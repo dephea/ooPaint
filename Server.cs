@@ -1,4 +1,5 @@
-﻿using SimpleTCP;
+﻿using Newtonsoft.Json;
+using SimpleTCP;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,26 +16,54 @@ namespace ProjectOOP
     {
         SimpleTcpServer server;
 
+        public event Action<RemoteAction> OnActionReceived;
+
         public Server()
         {
             server = new SimpleTcpServer();
             server.Delimiter = 0x13;
-            server.DataReceived += Server_DataReceived;
+            //server.DataReceived += Server_DataReceived;
+            server.DelimiterDataReceived += Server_DataReceived;
+
             server.ClientConnected += Server_ClientConnected;
             server.ClientDisconnected += Server_ClientDisconnected;
         }
 
         private void Server_ClientConnected(object? sender, TcpClient e)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine("User connected: " + e.Client.RemoteEndPoint.ToString());
         }
         private void Server_ClientDisconnected(object? sender, TcpClient e)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine("User disconnected: " + e.Client.RemoteEndPoint.ToString());
         }
-        private void Server_DataReceived(object? sender, SimpleTCP.Message e)
+        private async void Server_DataReceived(object? sender, SimpleTCP.Message e)
         {
-            e.Reply(Encoding.ASCII.GetBytes("I got your data!"));
+
+            await Task.Run(() =>
+            {
+                //e.Reply(Encoding.ASCII.GetBytes("I got your data!"));
+
+                string jsonAction = Encoding.UTF8.GetString(e.Data);
+
+
+                try
+                {
+                    RemoteAction action = JsonConvert.DeserializeObject<RemoteAction>(jsonAction);
+
+                    OnActionReceived?.Invoke(action);
+
+                    Debug.WriteLine($"Received action: Tool={action.title}, Start={action.start}, End={action.end}");
+
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("JSON Deserialization Error: " + ex.Message);
+                    Debug.WriteLine("Invalid JSON:" + jsonAction);
+                }
+
+            });
         }
 
         public void StartServer(int port)
