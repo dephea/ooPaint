@@ -14,15 +14,42 @@ namespace ProjectOOP
     {
         private SimpleTcpClient client;
 
+        public event Action<RemoteAction> OnActionReceived;
+
         public Client() {
             client = new SimpleTcpClient();
             client.Delimiter = 0x13;
-            client.DataReceived += Client_DataReceived;
+            client.DelimiterDataReceived += Client_DataReceived;
         }
 
-        private void Client_DataReceived(object? sender, SimpleTCP.Message e)
+        private async void Client_DataReceived(object? sender, SimpleTCP.Message e)
         {
-            e.Reply(Encoding.ASCII.GetBytes("I got your data!"));
+
+            Debug.WriteLine("Client_DataReceived proc");
+            await Task.Run(() =>
+            {
+                //e.Reply(Encoding.ASCII.GetBytes("I got your data!"));
+
+                string jsonAction = Encoding.UTF8.GetString(e.Data);
+
+
+                try
+                {
+                    RemoteAction action = JsonConvert.DeserializeObject<RemoteAction>(jsonAction);
+
+                    OnActionReceived?.Invoke(action);
+
+                    Debug.WriteLine($"Received action: Tool={action.title}, Start={action.start}, End={action.end}");
+
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("JSON Deserialization Error: " + ex.Message);
+                    Debug.WriteLine("Invalid JSON:" + jsonAction);
+                }
+
+            });
         }
 
         public void Connect(string ipAddress, int port)

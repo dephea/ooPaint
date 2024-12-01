@@ -43,13 +43,10 @@ namespace ProjectOOP
             {
                 client = new Client();
                 client.Connect("127.0.0.1", 5000);
+                client.OnActionReceived += ReceiveAction;
             }
 
-
-
         }
-
-
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -66,7 +63,7 @@ namespace ProjectOOP
             tool = pencil;
             trackBar.Value = (int)tool.width;
             currentToolLabel.Text = "Pencil";
-            Debug.WriteLine("Hello! You clicked on the pencil tool");
+            Debug.WriteLine("You clicked on the pencil tool");
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -93,6 +90,9 @@ namespace ProjectOOP
             if (!Utils.isHost)
             {
                 client.SendAction(tool, px, px);
+            } else
+            {
+                server.SendAction(tool, px, py);
             }
             
 
@@ -108,6 +108,9 @@ namespace ProjectOOP
                 if (!Utils.isHost)
                 {
                     client.SendAction(tool, px, py);
+                } else
+                {
+                    server.SendAction(tool, px, py);   
                 }
                 py = px;
             }
@@ -154,6 +157,7 @@ namespace ProjectOOP
 
         private void ReceiveAction(RemoteAction action)
         {
+            Debug.WriteLine("ReceiveAction proc");
             if (InvokeRequired)
             {
                 Invoke(new Action(() => ProcessRemoteAction(action)));
@@ -182,9 +186,11 @@ namespace ProjectOOP
             }
             else
             {
-                Debug.WriteLine("Received unknown tool: {action.title}");
+                Debug.WriteLine($"Received unknown tool: {action.title}");
                 return;
             }
+
+
 
             tool.Draw(g, action.start, action.end);
 

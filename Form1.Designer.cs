@@ -163,11 +163,11 @@
             // logs
             // 
             logs.BackColor = SystemColors.HotTrack;
-            logs.Location = new Point(158, 365);
+            logs.Location = new Point(341, 549);
             logs.Multiline = true;
             logs.Name = "logs";
             logs.ScrollBars = ScrollBars.Vertical;
-            logs.Size = new Size(627, 251);
+            logs.Size = new Size(627, 77);
             logs.TabIndex = 0;
             // 
             // Form1
