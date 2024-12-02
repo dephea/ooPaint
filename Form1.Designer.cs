@@ -180,7 +180,7 @@
             Controls.Add(panel1);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "ooPaint";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar).EndInit();

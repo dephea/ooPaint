@@ -17,7 +17,7 @@ namespace ProjectOOP
         bool paint = false;
         Point px, py;
 
-        public Form1()
+        public Form1(int port)
         {
             InitializeComponent();
 
@@ -31,20 +31,34 @@ namespace ProjectOOP
 
             Utils.SetupButtonImage(cursor, cursor.Image);
 
-            
+           
+            this.Text = "Host";
+            server = new Server();
+            server.StartServer(port);
+            server.OnActionReceived += ReceiveAction;
 
-            if (Utils.isHost)
-            {
-                server = new Server();
-                server.StartServer(5000);
-                server.OnActionReceived += ReceiveAction;
-            }
-            else
-            {
-                client = new Client();
-                client.Connect("127.0.0.1", 5000);
-                client.OnActionReceived += ReceiveAction;
-            }
+
+        }
+
+        public Form1(string address, int port)
+        {
+            InitializeComponent();
+
+            myCanvas = new Canvas(pic.Width, pic.Height);
+            pic.Image = myCanvas.bitmap;
+            g = myCanvas.graphics;
+            pencil = new Pencil(Color.Black, 5);
+            eraser = new Eraser(5);
+            tool = pencil;
+
+
+            Utils.SetupButtonImage(cursor, cursor.Image);
+
+            this.Text = "Client";
+            client = new Client();
+            client.Connect(address, port);
+            client.OnActionReceived += ReceiveAction;
+            
 
         }
 

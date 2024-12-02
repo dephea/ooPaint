@@ -12,7 +12,6 @@ namespace ProjectOOP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new SelectModeForm());
-            Application.Run(new Form1());
         }
     }
 }

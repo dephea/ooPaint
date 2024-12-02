@@ -30,44 +30,82 @@
         {
             hostBtn = new Button();
             connectBtn = new Button();
+            portInput = new TextBox();
+            startButton = new Button();
+            ipPortInput = new TextBox();
             SuspendLayout();
             // 
             // hostBtn
             // 
-            hostBtn.Location = new Point(90, 152);
+            hostBtn.Location = new Point(68, 39);
             hostBtn.Name = "hostBtn";
             hostBtn.Size = new Size(253, 99);
             hostBtn.TabIndex = 0;
-            hostBtn.Text = "Host";
+            hostBtn.Text = "Host myself";
             hostBtn.UseVisualStyleBackColor = true;
             hostBtn.Click += hostBtn_Click;
             // 
             // connectBtn
             // 
-            connectBtn.Location = new Point(381, 152);
+            connectBtn.Location = new Point(461, 39);
             connectBtn.Name = "connectBtn";
             connectBtn.Size = new Size(253, 99);
             connectBtn.TabIndex = 1;
-            connectBtn.Text = "Connect";
+            connectBtn.Text = "Connect to another host";
             connectBtn.UseVisualStyleBackColor = true;
             connectBtn.Click += connectBtn_Click;
+            // 
+            // portInput
+            // 
+            portInput.Location = new Point(68, 187);
+            portInput.Name = "portInput";
+            portInput.PlaceholderText = "Port";
+            portInput.Size = new Size(253, 31);
+            portInput.TabIndex = 2;
+            portInput.Visible = false;
+            // 
+            // startButton
+            // 
+            startButton.Location = new Point(263, 336);
+            startButton.Name = "startButton";
+            startButton.Size = new Size(263, 76);
+            startButton.TabIndex = 3;
+            startButton.Text = "Start";
+            startButton.UseVisualStyleBackColor = true;
+            startButton.Click += startButton_Click;
+            // 
+            // ipPortInput
+            // 
+            ipPortInput.Location = new Point(461, 187);
+            ipPortInput.Name = "ipPortInput";
+            ipPortInput.PlaceholderText = "IP address + port";
+            ipPortInput.Size = new Size(253, 31);
+            ipPortInput.TabIndex = 4;
+            ipPortInput.Visible = false;
             // 
             // SelectModeForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(ipPortInput);
+            Controls.Add(startButton);
+            Controls.Add(portInput);
             Controls.Add(connectBtn);
             Controls.Add(hostBtn);
             Name = "SelectModeForm";
             Text = "SelectModeForm";
             Load += SelectModeForm_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button hostBtn;
         private Button connectBtn;
+        private TextBox portInput;
+        private Button startButton;
+        private TextBox ipPortInput;
     }
 }
