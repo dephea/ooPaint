@@ -26,7 +26,6 @@ namespace ProjectOOP
         {
             server = new SimpleTcpServer();
             server.Delimiter = 0x13;
-            //server.DataReceived += Server_DataReceived;
             server.DelimiterDataReceived += Server_DataReceived;
 
             clients = new ConcurrentDictionary<string, TcpClient>();
