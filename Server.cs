@@ -123,16 +123,16 @@ namespace ProjectOOP
 
                     //client.WriteLine(jsonAction);
 
-                    Debug.WriteLine("Успешно отправил");
+                    Debug.WriteLine("Successfully sent action");
                 }
                 else
                 {
-                    Debug.WriteLine("Ошибка: Некорректный JSON");
+                    Debug.WriteLine("Error: Invalid JSON");
                 }
             }
             catch (JsonSerializationException ex)
             {
-                Debug.WriteLine("Ошибка сериализации: " + ex.Message);
+                Debug.WriteLine("Serialization error: " + ex.Message);
             }
         }
 

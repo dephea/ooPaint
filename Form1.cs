@@ -174,7 +174,7 @@ namespace ProjectOOP
         private async void ReceiveAction(RemoteAction action)
         {
             Debug.WriteLine("ReceiveAction proc");
-            // do ProcessRemoteAction in current thread
+            // do ProcessRemoteAction in the current (UI) thread
             await Task.Run(() => Invoke(new Action(() => ProcessRemoteAction(action))));
         }
 

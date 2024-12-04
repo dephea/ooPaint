@@ -25,7 +25,6 @@ namespace ProjectOOP
         private async void Client_DataReceived(object? sender, SimpleTCP.Message e)
         {
 
-            Debug.WriteLine("Client_DataReceived proc");
             // for asynchronous processing
             await Task.Run(() =>
             {
@@ -84,16 +83,16 @@ namespace ProjectOOP
 
                     client.WriteLine(jsonAction);
 
-                    Debug.WriteLine("Успешно отправил");
+                    Debug.WriteLine("Successfully sent action");
                 }
                 else
                 {
-                    Debug.WriteLine("Ошибка: Некорректный JSON");
+                    Debug.WriteLine("Error: Invalid JSON");
                 }
             }
             catch (JsonSerializationException ex)
             {
-                Debug.WriteLine("Ошибка сериализации: " + ex.Message);
+                Debug.WriteLine("Serialization error: " + ex.Message);
             }
         }
 
