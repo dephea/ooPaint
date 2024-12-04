@@ -26,6 +26,7 @@ namespace ProjectOOP
         {
 
             Debug.WriteLine("Client_DataReceived proc");
+            // for asynchronous processing
             await Task.Run(() =>
             {
                 //e.Reply(Encoding.ASCII.GetBytes("I got your data!"));

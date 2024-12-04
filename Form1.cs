@@ -15,7 +15,7 @@ namespace ProjectOOP
 
 
         bool paint = false;
-        Point px, py;
+        Point currentPoint, previousPoint;
 
         public Form1(int port)
         {
@@ -97,16 +97,16 @@ namespace ProjectOOP
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
-            px = e.Location;
-            py = e.Location;
-            tool.Draw(g, px, px);
+            currentPoint = e.Location;
+            previousPoint = e.Location;
+            tool.Draw(g, currentPoint, currentPoint);
 
             if (!Utils.isHost)
             {
-                client.SendAction(tool, px, px);
+                client.SendAction(tool, currentPoint, currentPoint);
             } else
             {
-                server.SendAction(tool, px, py);
+                server.SendAction(tool, currentPoint, previousPoint);
             }
             
 
@@ -117,16 +117,16 @@ namespace ProjectOOP
         {
             if (paint)
             {
-                px = e.Location;
-                tool.Draw(g, px, py);
+                currentPoint = e.Location;
+                tool.Draw(g, currentPoint, previousPoint);
                 if (!Utils.isHost)
                 {
-                    client.SendAction(tool, px, py);
+                    client.SendAction(tool, currentPoint, previousPoint);
                 } else
                 {
-                    server.SendAction(tool, px, py);   
+                    server.SendAction(tool, currentPoint, previousPoint);   
                 }
-                py = px;
+                previousPoint = currentPoint;
             }
             pic.Refresh();
         }
@@ -169,17 +169,13 @@ namespace ProjectOOP
         {
         }
 
-        private void ReceiveAction(RemoteAction action)
+        // for asynchronous processing.
+        // makes everything faster
+        private async void ReceiveAction(RemoteAction action)
         {
             Debug.WriteLine("ReceiveAction proc");
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => ProcessRemoteAction(action)));
-            }
-            else
-            {
-                ProcessRemoteAction(action);
-            }
+            // do ProcessRemoteAction in current thread
+            await Task.Run(() => Invoke(new Action(() => ProcessRemoteAction(action))));
         }
 
 

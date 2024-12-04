@@ -18,7 +18,7 @@ namespace ProjectOOP
     {
         SimpleTcpServer server;
 
-        private ConcurrentDictionary<string, TcpClient> clients;
+        private ConcurrentDictionary<string, TcpClient> clients; // can access particular clients if needed
 
         public event Action<RemoteAction> OnActionReceived;
 
@@ -58,7 +58,7 @@ namespace ProjectOOP
         }
         private async void Server_DataReceived(object? sender, SimpleTCP.Message e)
         {
-
+            // for asynchronous processing
             await Task.Run(() =>
             {
                 //e.Reply(Encoding.ASCII.GetBytes("I got your data!"));
