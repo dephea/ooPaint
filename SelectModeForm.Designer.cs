@@ -1,4 +1,7 @@
-﻿namespace ProjectOOP
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace ProjectOOP
 {
     partial class SelectModeForm
     {

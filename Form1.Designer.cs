@@ -1,4 +1,7 @@
-﻿namespace ProjectOOP
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace ProjectOOP
 {
     partial class Form1
     {
@@ -38,7 +41,6 @@
             pic = new PictureBox();
             colorDialog = new ColorDialog();
             canvasPanel = new Panel();
-            logs = new TextBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pic).BeginInit();
@@ -64,7 +66,7 @@
             // currentToolLabel
             // 
             currentToolLabel.AutoSize = true;
-            currentToolLabel.Font = new Font("Segoe UI", 14F);
+            currentToolLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             currentToolLabel.Location = new Point(249, 15);
             currentToolLabel.Name = "currentToolLabel";
             currentToolLabel.Size = new Size(90, 38);
@@ -152,23 +154,12 @@
             // 
             // canvasPanel
             // 
-            canvasPanel.Controls.Add(logs);
             canvasPanel.Controls.Add(pic);
             canvasPanel.Dock = DockStyle.Fill;
             canvasPanel.Location = new Point(0, 110);
             canvasPanel.Name = "canvasPanel";
             canvasPanel.Size = new Size(1385, 632);
             canvasPanel.TabIndex = 3;
-            // 
-            // logs
-            // 
-            logs.BackColor = SystemColors.HotTrack;
-            logs.Location = new Point(341, 549);
-            logs.Multiline = true;
-            logs.Name = "logs";
-            logs.ScrollBars = ScrollBars.Vertical;
-            logs.Size = new Size(627, 77);
-            logs.TabIndex = 0;
             // 
             // Form1
             // 
@@ -186,7 +177,6 @@
             ((System.ComponentModel.ISupportInitialize)trackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)pic).EndInit();
             canvasPanel.ResumeLayout(false);
-            canvasPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -202,6 +192,5 @@
         private Panel canvasPanel;
         private TrackBar trackBar;
         private Label currentToolLabel;
-        private TextBox logs;
     }
 }
