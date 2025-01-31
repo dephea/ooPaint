@@ -66,20 +66,21 @@ namespace ProjectOOP
             // currentToolLabel
             // 
             currentToolLabel.AutoSize = true;
-            currentToolLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            currentToolLabel.Location = new Point(249, 15);
+            currentToolLabel.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            currentToolLabel.Location = new Point(323, 20);
             currentToolLabel.Name = "currentToolLabel";
-            currentToolLabel.Size = new Size(90, 38);
+            currentToolLabel.Size = new Size(126, 54);
             currentToolLabel.TabIndex = 5;
             currentToolLabel.Text = "Pencil";
+            currentToolLabel.Click += currentToolLabel_Click;
             // 
             // trackBar
             // 
-            trackBar.Location = new Point(85, 80);
+            trackBar.Location = new Point(545, 15);
             trackBar.Maximum = 20;
             trackBar.Minimum = 1;
             trackBar.Name = "trackBar";
-            trackBar.Size = new Size(219, 69);
+            trackBar.Size = new Size(277, 69);
             trackBar.TabIndex = 4;
             trackBar.Value = 5;
             trackBar.Scroll += trackBar_Scroll;
@@ -91,11 +92,11 @@ namespace ProjectOOP
             eraserBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 128, 128);
             eraserBtn.FlatStyle = FlatStyle.Flat;
             eraserBtn.ForeColor = Color.White;
-            eraserBtn.Location = new Point(85, 12);
+            eraserBtn.Image = Properties.Resources.icons8_eraser_96;
+            eraserBtn.Location = new Point(114, 12);
             eraserBtn.Name = "eraserBtn";
-            eraserBtn.Size = new Size(58, 53);
+            eraserBtn.Size = new Size(87, 87);
             eraserBtn.TabIndex = 3;
-            eraserBtn.Text = "Eraser";
             eraserBtn.UseVisualStyleBackColor = true;
             eraserBtn.Click += eraser_Click;
             eraserBtn.MouseDown += eraserBtn_MouseDown;
@@ -106,10 +107,10 @@ namespace ProjectOOP
             cursor.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 128, 128);
             cursor.FlatStyle = FlatStyle.Flat;
             cursor.ForeColor = Color.White;
-            cursor.Image = Properties.Resources.pencil;
-            cursor.Location = new Point(158, 12);
+            cursor.Image = Properties.Resources.icons8_pen_96;
+            cursor.Location = new Point(217, 12);
             cursor.Name = "cursor";
-            cursor.Size = new Size(59, 53);
+            cursor.Size = new Size(87, 87);
             cursor.TabIndex = 2;
             cursor.UseVisualStyleBackColor = true;
             cursor.Click += cursor_Click;
@@ -123,7 +124,7 @@ namespace ProjectOOP
             color.ForeColor = Color.White;
             color.Location = new Point(12, 12);
             color.Name = "color";
-            color.Size = new Size(55, 53);
+            color.Size = new Size(87, 87);
             color.TabIndex = 1;
             color.UseVisualStyleBackColor = false;
             color.Click += color_Click;

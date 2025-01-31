@@ -10,7 +10,7 @@ namespace ProjectOOP
     {
 
         private Graphics g;
-        private Canvas myCanvas;
+        private myCanvas myCanvas;
         private Tool tool;
         private Pencil pencil;
         private Eraser eraser;
@@ -25,17 +25,22 @@ namespace ProjectOOP
         {
             InitializeComponent();
 
-            myCanvas = new Canvas(pic.Width, pic.Height);
+            myCanvas = new myCanvas(pic.Width, pic.Height);
             pic.Image = myCanvas.bitmap;
             g = myCanvas.graphics;
             pencil = new Pencil(Color.Black, 5);
             eraser = new Eraser(5);
             tool = pencil;
 
+            //pic.SizeMode = PictureBoxSizeMode.StretchImage;
+            //pic.Dock = DockStyle.Fill;
 
             Utils.SetupButtonImage(cursor, cursor.Image);
+            Utils.SetupButtonImage(eraserBtn, eraserBtn.Image);
 
-           
+            this.SizeChanged += Window_SizeChanged;
+
+
             this.Text = "Host";
             server = new Server();
             server.StartServer(port);
@@ -44,11 +49,20 @@ namespace ProjectOOP
 
         }
 
+        private void Window_SizeChanged(object? sender, EventArgs e)
+        {
+            int newLeft = (this.ClientSize.Width - pic.Width) / 2;
+            int newTop = (this.ClientSize.Height - pic.Height) / 2;
+
+            pic.Left = newLeft;
+            pic.Top = newTop;
+        }
+
         public Form1(string address, int port)
         {
             InitializeComponent();
 
-            myCanvas = new Canvas(pic.Width, pic.Height);
+            myCanvas = new myCanvas(pic.Width, pic.Height);
             pic.Image = myCanvas.bitmap;
             g = myCanvas.graphics;
             pencil = new Pencil(Color.Black, 5);
@@ -56,13 +70,12 @@ namespace ProjectOOP
             tool = pencil;
 
 
-            Utils.SetupButtonImage(cursor, cursor.Image);
 
             this.Text = "Client";
             client = new Client();
             client.Connect(address, port);
             client.OnActionReceived += ReceiveAction;
-            
+
 
         }
 
@@ -108,11 +121,12 @@ namespace ProjectOOP
             if (!Utils.isHost)
             {
                 client.SendAction(tool, currentPoint, currentPoint);
-            } else
+            }
+            else
             {
                 server.SendAction(tool, currentPoint, previousPoint);
             }
-            
+
 
             pic.Refresh();
         }
@@ -126,9 +140,10 @@ namespace ProjectOOP
                 if (!Utils.isHost)
                 {
                     client.SendAction(tool, currentPoint, previousPoint);
-                } else
+                }
+                else
                 {
-                    server.SendAction(tool, currentPoint, previousPoint);   
+                    server.SendAction(tool, currentPoint, previousPoint);
                 }
                 previousPoint = currentPoint;
             }
@@ -209,6 +224,11 @@ namespace ProjectOOP
             tool.Draw(g, action.start, action.end);
 
             pic.Refresh();
+        }
+
+        private void currentToolLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
