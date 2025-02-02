@@ -23,6 +23,9 @@ namespace ProjectOOP
         bool isFigure = false;
         Point startPoint, currentPoint, previousPoint;
 
+        private Bitmap tempBitmap;
+        private Graphics tempGraphics;
+
         public Form1(int port)
         {
             InitializeComponent();
@@ -40,6 +43,9 @@ namespace ProjectOOP
 
             //pic.SizeMode = PictureBoxSizeMode.StretchImage;
             //pic.Dock = DockStyle.Fill;
+
+
+
 
             Utils.SetupButtonImage(cursor, cursor.Image);
             Utils.SetupButtonImage(eraserBtn, eraserBtn.Image);
@@ -140,6 +146,10 @@ namespace ProjectOOP
             {
                 isFigure = true;
                 Debug.WriteLine("isFigure = true");
+
+                tempBitmap = new Bitmap(pic.Width, pic.Height);
+                tempGraphics = Graphics.FromImage(tempBitmap);
+                tempGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             }
             else
             {
@@ -167,14 +177,22 @@ namespace ProjectOOP
                 if (!isFigure)
                 {
                     tool.Draw(g, currentPoint, previousPoint);
-                }
-                if (!Utils.isHost)
-                {
-                    client.SendAction(tool, currentPoint, previousPoint);
+                    if (!Utils.isHost)
+                    {
+                        client.SendAction(tool, currentPoint, previousPoint);
+                    }
+                    else
+                    {
+                        server.SendAction(tool, currentPoint, previousPoint);
+                    }
                 }
                 else
                 {
-                    server.SendAction(tool, currentPoint, previousPoint);
+                    tempGraphics.DrawImage(myCanvas.bitmap, 0, 0);
+
+                    tool.Draw(tempGraphics, startPoint, currentPoint);
+
+                    pic.Image = tempBitmap;
                 }
                 previousPoint = currentPoint;
             }
@@ -188,6 +206,23 @@ namespace ProjectOOP
             {
                 isFigure = false;
                 tool.Draw(g, startPoint, e.Location);
+
+                if (!Utils.isHost)
+                {
+                    client.SendAction(tool, startPoint, e.Location);
+                    Debug.WriteLine("Sent figure action");
+                }
+                else
+                {
+                    server.SendAction(tool, startPoint, e.Location);
+                    Debug.WriteLine("Sent figure action");
+                }
+
+                tempGraphics.Dispose();
+                tempBitmap.Dispose();
+
+
+                pic.Image = myCanvas.bitmap;
             }
         }
 
@@ -249,6 +284,14 @@ namespace ProjectOOP
             {
                 tool = new Eraser(action.width);
             }
+            else if (action.title == "Rectangle")
+            {
+                tool = new Rectangle(action.color, action.width);
+            }
+            else if (action.title == "Circle")
+            {
+                tool = new Circle(action.color, action.width);
+            }
             else
             {
                 Debug.WriteLine($"Received unknown tool: {action.title}");
@@ -283,6 +326,16 @@ namespace ProjectOOP
             currentToolLabel.Text = "Circle";
             color.BackColor = circle.color;
             Debug.WriteLine("You clicked on the Circle tool");
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to quit?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

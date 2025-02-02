@@ -41,7 +41,7 @@ namespace ProjectOOP
             // hostBtn
             // 
             hostBtn.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
-            hostBtn.Location = new Point(48, 23);
+            hostBtn.Location = new Point(48, 58);
             hostBtn.Margin = new Padding(2);
             hostBtn.Name = "hostBtn";
             hostBtn.Size = new Size(282, 59);
@@ -53,7 +53,7 @@ namespace ProjectOOP
             // connectBtn
             // 
             connectBtn.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
-            connectBtn.Location = new Point(523, 23);
+            connectBtn.Location = new Point(523, 58);
             connectBtn.Margin = new Padding(2);
             connectBtn.Name = "connectBtn";
             connectBtn.Size = new Size(282, 59);
@@ -65,7 +65,7 @@ namespace ProjectOOP
             // portInput
             // 
             portInput.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
-            portInput.Location = new Point(48, 133);
+            portInput.Location = new Point(48, 170);
             portInput.Margin = new Padding(2);
             portInput.Name = "portInput";
             portInput.PlaceholderText = "Port";
@@ -88,7 +88,7 @@ namespace ProjectOOP
             // ipPortInput
             // 
             ipPortInput.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
-            ipPortInput.Location = new Point(523, 133);
+            ipPortInput.Location = new Point(523, 170);
             ipPortInput.Margin = new Padding(2);
             ipPortInput.Name = "ipPortInput";
             ipPortInput.PlaceholderText = "IP address + port";

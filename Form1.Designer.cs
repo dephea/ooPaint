@@ -33,6 +33,7 @@ namespace ProjectOOP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             panel1 = new Panel();
+            Exit_btn = new Button();
             circle_btn = new Button();
             rect_btn = new Button();
             currentToolLabel = new Label();
@@ -53,6 +54,7 @@ namespace ProjectOOP
             // panel1
             // 
             panel1.BackColor = SystemColors.AppWorkspace;
+            panel1.Controls.Add(Exit_btn);
             panel1.Controls.Add(circle_btn);
             panel1.Controls.Add(rect_btn);
             panel1.Controls.Add(currentToolLabel);
@@ -63,11 +65,22 @@ namespace ProjectOOP
             panel1.Dock = DockStyle.Top;
             panel1.ForeColor = SystemColors.ControlText;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(2, 2, 2, 2);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
             panel1.Size = new Size(1274, 66);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
+            // 
+            // Exit_btn
+            // 
+            Exit_btn.BackColor = Color.RosyBrown;
+            Exit_btn.Location = new Point(1166, 11);
+            Exit_btn.Name = "Exit_btn";
+            Exit_btn.Size = new Size(76, 45);
+            Exit_btn.TabIndex = 6;
+            Exit_btn.Text = "Exit";
+            Exit_btn.UseVisualStyleBackColor = false;
+            Exit_btn.Click += button1_Click_1;
             // 
             // circle_btn
             // 
@@ -77,7 +90,7 @@ namespace ProjectOOP
             circle_btn.ForeColor = Color.White;
             circle_btn.Image = (Image)resources.GetObject("circle_btn.Image");
             circle_btn.Location = new Point(303, 7);
-            circle_btn.Margin = new Padding(2, 2, 2, 2);
+            circle_btn.Margin = new Padding(2);
             circle_btn.Name = "circle_btn";
             circle_btn.Size = new Size(61, 52);
             circle_btn.TabIndex = 4;
@@ -91,8 +104,8 @@ namespace ProjectOOP
             rect_btn.FlatStyle = FlatStyle.Flat;
             rect_btn.ForeColor = Color.White;
             rect_btn.Image = (Image)resources.GetObject("rect_btn.Image");
-            rect_btn.Location = new Point(230, 7);
-            rect_btn.Margin = new Padding(2, 2, 2, 2);
+            rect_btn.Location = new Point(227, 7);
+            rect_btn.Margin = new Padding(2);
             rect_btn.Name = "rect_btn";
             rect_btn.Size = new Size(61, 52);
             rect_btn.TabIndex = 3;
@@ -113,12 +126,12 @@ namespace ProjectOOP
             // 
             // trackBar
             // 
-            trackBar.Location = new Point(535, 7);
-            trackBar.Margin = new Padding(2, 2, 2, 2);
+            trackBar.Location = new Point(560, 17);
+            trackBar.Margin = new Padding(2);
             trackBar.Maximum = 20;
             trackBar.Minimum = 1;
             trackBar.Name = "trackBar";
-            trackBar.Size = new Size(194, 45);
+            trackBar.Size = new Size(333, 45);
             trackBar.TabIndex = 4;
             trackBar.Value = 5;
             trackBar.Scroll += trackBar_Scroll;
@@ -132,7 +145,7 @@ namespace ProjectOOP
             eraserBtn.ForeColor = Color.White;
             eraserBtn.Image = Properties.Resources.icons8_eraser_96;
             eraserBtn.Location = new Point(80, 7);
-            eraserBtn.Margin = new Padding(2, 2, 2, 2);
+            eraserBtn.Margin = new Padding(2);
             eraserBtn.Name = "eraserBtn";
             eraserBtn.Size = new Size(61, 52);
             eraserBtn.TabIndex = 3;
@@ -148,7 +161,7 @@ namespace ProjectOOP
             cursor.ForeColor = Color.White;
             cursor.Image = Properties.Resources.icons8_pen_96;
             cursor.Location = new Point(152, 7);
-            cursor.Margin = new Padding(2, 2, 2, 2);
+            cursor.Margin = new Padding(2);
             cursor.Name = "cursor";
             cursor.Size = new Size(61, 52);
             cursor.TabIndex = 2;
@@ -163,7 +176,7 @@ namespace ProjectOOP
             color.FlatStyle = FlatStyle.Flat;
             color.ForeColor = Color.White;
             color.Location = new Point(8, 7);
-            color.Margin = new Padding(2, 2, 2, 2);
+            color.Margin = new Padding(2);
             color.Name = "color";
             color.Size = new Size(61, 52);
             color.TabIndex = 1;
@@ -176,7 +189,7 @@ namespace ProjectOOP
             panel2.Dock = DockStyle.Bottom;
             panel2.ForeColor = SystemColors.ControlText;
             panel2.Location = new Point(0, 635);
-            panel2.Margin = new Padding(2, 2, 2, 2);
+            panel2.Margin = new Padding(2);
             panel2.Name = "panel2";
             panel2.Size = new Size(1274, 16);
             panel2.TabIndex = 1;
@@ -186,7 +199,7 @@ namespace ProjectOOP
             // 
             pic.BackColor = Color.White;
             pic.Location = new Point(0, 0);
-            pic.Margin = new Padding(2, 2, 2, 2);
+            pic.Margin = new Padding(2);
             pic.Name = "pic";
             pic.Size = new Size(1272, 565);
             pic.TabIndex = 2;
@@ -202,7 +215,7 @@ namespace ProjectOOP
             canvasPanel.Controls.Add(pic);
             canvasPanel.Dock = DockStyle.Fill;
             canvasPanel.Location = new Point(0, 66);
-            canvasPanel.Margin = new Padding(2, 2, 2, 2);
+            canvasPanel.Margin = new Padding(2);
             canvasPanel.Name = "canvasPanel";
             canvasPanel.Size = new Size(1274, 569);
             canvasPanel.TabIndex = 3;
@@ -215,7 +228,7 @@ namespace ProjectOOP
             Controls.Add(canvasPanel);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ooPaint";
@@ -241,5 +254,6 @@ namespace ProjectOOP
         private Label currentToolLabel;
         private Button rect_btn;
         private Button circle_btn;
+        private Button Exit_btn;
     }
 }
