@@ -4,3 +4,11 @@ Program de desenare în rețea, fiind posibilă participarea mai multor utilizat
 - aplicație gen Paint dar pentru mai
 mulți utilizatorii.
 - fără posibilitatea de a muta obiecte.
+
+// Мигрировать на .NET 5.0
+
+// Починить синхронное принятие данных от клиента на хосте
+
+// Починить дизайн
+
+// Добавить пару новых функций

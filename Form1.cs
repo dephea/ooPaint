@@ -1,4 +1,8 @@
+using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProjectOOP
 {
@@ -6,32 +10,51 @@ namespace ProjectOOP
     {
 
         private Graphics g;
-        private Canvas myCanvas;
-        private Tool tool;
-        private Pencil pencil;
-        private Eraser eraser;
+        private myCanvas myCanvas;
+        private Tool tool, pencil, eraser, rectangle, circle;
+        //private Pencil pencil;
+        //private Eraser eraser;
+        //private Rectangle rectangle;
         private Server server;
         private Client client;
 
 
         bool paint = false;
-        Point currentPoint, previousPoint;
+        bool isFigure = false;
+        Point startPoint, currentPoint, previousPoint;
+
+        private Bitmap tempBitmap;
+        private Graphics tempGraphics;
 
         public Form1(int port)
         {
             InitializeComponent();
 
-            myCanvas = new Canvas(pic.Width, pic.Height);
+            myCanvas = new myCanvas(pic.Width, pic.Height);
             pic.Image = myCanvas.bitmap;
             g = myCanvas.graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             pencil = new Pencil(Color.Black, 5);
             eraser = new Eraser(5);
+            rectangle = new Rectangle(Color.Green, 5);
+            circle = new Circle(Color.DarkBlue, 5);
             tool = pencil;
+
+            //pic.SizeMode = PictureBoxSizeMode.StretchImage;
+            //pic.Dock = DockStyle.Fill;
+
+
 
 
             Utils.SetupButtonImage(cursor, cursor.Image);
+            Utils.SetupButtonImage(eraserBtn, eraserBtn.Image);
+            Utils.SetupButtonImage(rect_btn, rect_btn.Image);
+            Utils.SetupButtonImage(circle_btn, circle_btn.Image);
 
-           
+            this.SizeChanged += Window_SizeChanged;
+
+
             this.Text = "Host";
             server = new Server();
             server.StartServer(port);
@@ -40,25 +63,42 @@ namespace ProjectOOP
 
         }
 
+        private void Window_SizeChanged(object? sender, EventArgs e)
+        {
+            int newLeft = (this.ClientSize.Width - pic.Width) / 2;
+            int newTop = (this.ClientSize.Height - pic.Height) / 2;
+
+            pic.Left = newLeft;
+            pic.Top = newTop;
+        }
+
         public Form1(string address, int port)
         {
             InitializeComponent();
 
-            myCanvas = new Canvas(pic.Width, pic.Height);
+            myCanvas = new myCanvas(pic.Width, pic.Height);
             pic.Image = myCanvas.bitmap;
             g = myCanvas.graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             pencil = new Pencil(Color.Black, 5);
             eraser = new Eraser(5);
+            rectangle = new Rectangle(Color.Green, 5);
+            circle = new Circle(Color.DarkBlue, 5);
             tool = pencil;
 
-
             Utils.SetupButtonImage(cursor, cursor.Image);
+            Utils.SetupButtonImage(eraserBtn, eraserBtn.Image);
+            Utils.SetupButtonImage(rect_btn, rect_btn.Image);
+            Utils.SetupButtonImage(circle_btn, circle_btn.Image);
+
+            this.SizeChanged += Window_SizeChanged;
 
             this.Text = "Client";
             client = new Client();
             client.Connect(address, port);
             client.OnActionReceived += ReceiveAction;
-            
+
 
         }
 
@@ -77,6 +117,7 @@ namespace ProjectOOP
             tool = pencil;
             trackBar.Value = (int)tool.width;
             currentToolLabel.Text = "Pencil";
+            color.BackColor = pencil.color;
             Debug.WriteLine("You clicked on the pencil tool");
         }
 
@@ -97,18 +138,33 @@ namespace ProjectOOP
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
+            startPoint = e.Location;
             currentPoint = e.Location;
             previousPoint = e.Location;
-            tool.Draw(g, currentPoint, currentPoint);
+
+            if (tool is ProjectOOP.Rectangle || tool is ProjectOOP.Circle)
+            {
+                isFigure = true;
+                Debug.WriteLine("isFigure = true");
+
+                tempBitmap = new Bitmap(pic.Width, pic.Height);
+                tempGraphics = Graphics.FromImage(tempBitmap);
+                tempGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            }
+            else
+            {
+                tool.Draw(g, currentPoint, currentPoint);
+            }
 
             if (!Utils.isHost)
             {
-                client.SendAction(tool, currentPoint, currentPoint);
-            } else
+                client.SendAction(tool, currentPoint, previousPoint);
+            }
+            else
             {
                 server.SendAction(tool, currentPoint, previousPoint);
             }
-            
+
 
             pic.Refresh();
         }
@@ -118,13 +174,25 @@ namespace ProjectOOP
             if (paint)
             {
                 currentPoint = e.Location;
-                tool.Draw(g, currentPoint, previousPoint);
-                if (!Utils.isHost)
+                if (!isFigure)
                 {
-                    client.SendAction(tool, currentPoint, previousPoint);
-                } else
+                    tool.Draw(g, currentPoint, previousPoint);
+                    if (!Utils.isHost)
+                    {
+                        client.SendAction(tool, currentPoint, previousPoint);
+                    }
+                    else
+                    {
+                        server.SendAction(tool, currentPoint, previousPoint);
+                    }
+                }
+                else
                 {
-                    server.SendAction(tool, currentPoint, previousPoint);   
+                    tempGraphics.DrawImage(myCanvas.bitmap, 0, 0);
+
+                    tool.Draw(tempGraphics, startPoint, currentPoint);
+
+                    pic.Image = tempBitmap;
                 }
                 previousPoint = currentPoint;
             }
@@ -134,6 +202,28 @@ namespace ProjectOOP
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
+            if (isFigure)
+            {
+                isFigure = false;
+                tool.Draw(g, startPoint, e.Location);
+
+                if (!Utils.isHost)
+                {
+                    client.SendAction(tool, startPoint, e.Location);
+                    Debug.WriteLine("Sent figure action");
+                }
+                else
+                {
+                    server.SendAction(tool, startPoint, e.Location);
+                    Debug.WriteLine("Sent figure action");
+                }
+
+                tempGraphics.Dispose();
+                tempBitmap.Dispose();
+
+
+                pic.Image = myCanvas.bitmap;
+            }
         }
 
         private void eraser_Click(object sender, EventArgs e)
@@ -194,6 +284,14 @@ namespace ProjectOOP
             {
                 tool = new Eraser(action.width);
             }
+            else if (action.title == "Rectangle")
+            {
+                tool = new Rectangle(action.color, action.width);
+            }
+            else if (action.title == "Circle")
+            {
+                tool = new Circle(action.color, action.width);
+            }
             else
             {
                 Debug.WriteLine($"Received unknown tool: {action.title}");
@@ -205,6 +303,39 @@ namespace ProjectOOP
             tool.Draw(g, action.start, action.end);
 
             pic.Refresh();
+        }
+
+        private void currentToolLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rect_btn_Click(object sender, EventArgs e)
+        {
+            tool = rectangle;
+            trackBar.Value = (int)tool.width;
+            currentToolLabel.Text = "Rectangle";
+            color.BackColor = rectangle.color;
+            Debug.WriteLine("You clicked on the Rectangle tool");
+        }
+
+        private void circle_btn_Click(object sender, EventArgs e)
+        {
+            tool = circle;
+            trackBar.Value = (int)tool.width;
+            currentToolLabel.Text = "Circle";
+            color.BackColor = circle.color;
+            Debug.WriteLine("You clicked on the Circle tool");
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to quit?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace ProjectOOP
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace ProjectOOP
 {
     partial class SelectModeForm
     {
@@ -37,9 +40,11 @@
             // 
             // hostBtn
             // 
-            hostBtn.Location = new Point(68, 39);
+            hostBtn.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
+            hostBtn.Location = new Point(48, 58);
+            hostBtn.Margin = new Padding(2);
             hostBtn.Name = "hostBtn";
-            hostBtn.Size = new Size(253, 99);
+            hostBtn.Size = new Size(282, 59);
             hostBtn.TabIndex = 0;
             hostBtn.Text = "Host myself";
             hostBtn.UseVisualStyleBackColor = true;
@@ -47,9 +52,11 @@
             // 
             // connectBtn
             // 
-            connectBtn.Location = new Point(461, 39);
+            connectBtn.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
+            connectBtn.Location = new Point(523, 58);
+            connectBtn.Margin = new Padding(2);
             connectBtn.Name = "connectBtn";
-            connectBtn.Size = new Size(253, 99);
+            connectBtn.Size = new Size(282, 59);
             connectBtn.TabIndex = 1;
             connectBtn.Text = "Connect to another host";
             connectBtn.UseVisualStyleBackColor = true;
@@ -57,18 +64,22 @@
             // 
             // portInput
             // 
-            portInput.Location = new Point(68, 187);
+            portInput.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
+            portInput.Location = new Point(48, 170);
+            portInput.Margin = new Padding(2);
             portInput.Name = "portInput";
             portInput.PlaceholderText = "Port";
-            portInput.Size = new Size(253, 31);
+            portInput.Size = new Size(282, 38);
             portInput.TabIndex = 2;
             portInput.Visible = false;
             // 
             // startButton
             // 
-            startButton.Location = new Point(263, 336);
+            startButton.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Point);
+            startButton.Location = new Point(221, 307);
+            startButton.Margin = new Padding(2);
             startButton.Name = "startButton";
-            startButton.Size = new Size(263, 76);
+            startButton.Size = new Size(416, 124);
             startButton.TabIndex = 3;
             startButton.Text = "Start";
             startButton.UseVisualStyleBackColor = true;
@@ -76,23 +87,26 @@
             // 
             // ipPortInput
             // 
-            ipPortInput.Location = new Point(461, 187);
+            ipPortInput.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
+            ipPortInput.Location = new Point(523, 170);
+            ipPortInput.Margin = new Padding(2);
             ipPortInput.Name = "ipPortInput";
             ipPortInput.PlaceholderText = "IP address + port";
-            ipPortInput.Size = new Size(253, 31);
+            ipPortInput.Size = new Size(282, 38);
             ipPortInput.TabIndex = 4;
             ipPortInput.Visible = false;
             // 
             // SelectModeForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(872, 478);
             Controls.Add(ipPortInput);
             Controls.Add(startButton);
             Controls.Add(portInput);
             Controls.Add(connectBtn);
             Controls.Add(hostBtn);
+            Margin = new Padding(2);
             Name = "SelectModeForm";
             Text = "SelectModeForm";
             Load += SelectModeForm_Load;
