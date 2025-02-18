@@ -24,5 +24,10 @@ namespace ProjectOOP
                 g.DrawEllipse(base.pen, x, y, width, height);
             }
         }
+
+        public override void Draw(Graphics g, Point start, Point end, Bitmap bitmap)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

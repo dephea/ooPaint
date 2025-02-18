@@ -18,5 +18,10 @@ namespace ProjectOOP
             }
             
         }
+
+        public override void Draw(Graphics g, Point start, Point end, Bitmap bitmap)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

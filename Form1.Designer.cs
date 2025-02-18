@@ -33,6 +33,7 @@ namespace ProjectOOP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             panel1 = new Panel();
+            Fill_btn = new Button();
             Exit_btn = new Button();
             circle_btn = new Button();
             rect_btn = new Button();
@@ -54,6 +55,7 @@ namespace ProjectOOP
             // panel1
             // 
             panel1.BackColor = SystemColors.AppWorkspace;
+            panel1.Controls.Add(Fill_btn);
             panel1.Controls.Add(Exit_btn);
             panel1.Controls.Add(circle_btn);
             panel1.Controls.Add(rect_btn);
@@ -65,18 +67,32 @@ namespace ProjectOOP
             panel1.Dock = DockStyle.Top;
             panel1.ForeColor = SystemColors.ControlText;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1274, 66);
+            panel1.Size = new Size(1820, 110);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
+            // 
+            // Fill_btn
+            // 
+            Fill_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 192);
+            Fill_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 128, 128);
+            Fill_btn.FlatStyle = FlatStyle.Flat;
+            Fill_btn.ForeColor = Color.White;
+            Fill_btn.Image = (Image)resources.GetObject("Fill_btn.Image");
+            Fill_btn.Location = new Point(547, 12);
+            Fill_btn.Name = "Fill_btn";
+            Fill_btn.Size = new Size(87, 87);
+            Fill_btn.TabIndex = 5;
+            Fill_btn.UseVisualStyleBackColor = true;
+            Fill_btn.Click += Fill_btn_Click;
             // 
             // Exit_btn
             // 
             Exit_btn.BackColor = Color.RosyBrown;
-            Exit_btn.Location = new Point(1166, 11);
+            Exit_btn.Location = new Point(1666, 18);
+            Exit_btn.Margin = new Padding(4, 5, 4, 5);
             Exit_btn.Name = "Exit_btn";
-            Exit_btn.Size = new Size(76, 45);
+            Exit_btn.Size = new Size(109, 75);
             Exit_btn.TabIndex = 6;
             Exit_btn.Text = "Exit";
             Exit_btn.UseVisualStyleBackColor = false;
@@ -89,10 +105,9 @@ namespace ProjectOOP
             circle_btn.FlatStyle = FlatStyle.Flat;
             circle_btn.ForeColor = Color.White;
             circle_btn.Image = (Image)resources.GetObject("circle_btn.Image");
-            circle_btn.Location = new Point(303, 7);
-            circle_btn.Margin = new Padding(2);
+            circle_btn.Location = new Point(433, 12);
             circle_btn.Name = "circle_btn";
-            circle_btn.Size = new Size(61, 52);
+            circle_btn.Size = new Size(87, 87);
             circle_btn.TabIndex = 4;
             circle_btn.UseVisualStyleBackColor = true;
             circle_btn.Click += circle_btn_Click;
@@ -104,10 +119,9 @@ namespace ProjectOOP
             rect_btn.FlatStyle = FlatStyle.Flat;
             rect_btn.ForeColor = Color.White;
             rect_btn.Image = (Image)resources.GetObject("rect_btn.Image");
-            rect_btn.Location = new Point(227, 7);
-            rect_btn.Margin = new Padding(2);
+            rect_btn.Location = new Point(324, 12);
             rect_btn.Name = "rect_btn";
-            rect_btn.Size = new Size(61, 52);
+            rect_btn.Size = new Size(87, 87);
             rect_btn.TabIndex = 3;
             rect_btn.UseVisualStyleBackColor = true;
             rect_btn.Click += rect_btn_Click;
@@ -116,22 +130,20 @@ namespace ProjectOOP
             // 
             currentToolLabel.AutoSize = true;
             currentToolLabel.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            currentToolLabel.Location = new Point(412, 12);
-            currentToolLabel.Margin = new Padding(2, 0, 2, 0);
+            currentToolLabel.Location = new Point(756, 18);
             currentToolLabel.Name = "currentToolLabel";
-            currentToolLabel.Size = new Size(86, 37);
+            currentToolLabel.Size = new Size(126, 54);
             currentToolLabel.TabIndex = 5;
             currentToolLabel.Text = "Pencil";
             currentToolLabel.Click += currentToolLabel_Click;
             // 
             // trackBar
             // 
-            trackBar.Location = new Point(560, 17);
-            trackBar.Margin = new Padding(2);
+            trackBar.Location = new Point(917, 23);
             trackBar.Maximum = 20;
             trackBar.Minimum = 1;
             trackBar.Name = "trackBar";
-            trackBar.Size = new Size(333, 45);
+            trackBar.Size = new Size(476, 69);
             trackBar.TabIndex = 4;
             trackBar.Value = 5;
             trackBar.Scroll += trackBar_Scroll;
@@ -144,10 +156,9 @@ namespace ProjectOOP
             eraserBtn.FlatStyle = FlatStyle.Flat;
             eraserBtn.ForeColor = Color.White;
             eraserBtn.Image = Properties.Resources.icons8_eraser_96;
-            eraserBtn.Location = new Point(80, 7);
-            eraserBtn.Margin = new Padding(2);
+            eraserBtn.Location = new Point(114, 12);
             eraserBtn.Name = "eraserBtn";
-            eraserBtn.Size = new Size(61, 52);
+            eraserBtn.Size = new Size(87, 87);
             eraserBtn.TabIndex = 3;
             eraserBtn.UseVisualStyleBackColor = true;
             eraserBtn.Click += eraser_Click;
@@ -160,10 +171,9 @@ namespace ProjectOOP
             cursor.FlatStyle = FlatStyle.Flat;
             cursor.ForeColor = Color.White;
             cursor.Image = Properties.Resources.icons8_pen_96;
-            cursor.Location = new Point(152, 7);
-            cursor.Margin = new Padding(2);
+            cursor.Location = new Point(217, 12);
             cursor.Name = "cursor";
-            cursor.Size = new Size(61, 52);
+            cursor.Size = new Size(87, 87);
             cursor.TabIndex = 2;
             cursor.UseVisualStyleBackColor = true;
             cursor.Click += cursor_Click;
@@ -175,10 +185,9 @@ namespace ProjectOOP
             color.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 128, 128);
             color.FlatStyle = FlatStyle.Flat;
             color.ForeColor = Color.White;
-            color.Location = new Point(8, 7);
-            color.Margin = new Padding(2);
+            color.Location = new Point(11, 12);
             color.Name = "color";
-            color.Size = new Size(61, 52);
+            color.Size = new Size(87, 87);
             color.TabIndex = 1;
             color.UseVisualStyleBackColor = false;
             color.Click += color_Click;
@@ -188,10 +197,9 @@ namespace ProjectOOP
             panel2.BackColor = SystemColors.ActiveBorder;
             panel2.Dock = DockStyle.Bottom;
             panel2.ForeColor = SystemColors.ControlText;
-            panel2.Location = new Point(0, 635);
-            panel2.Margin = new Padding(2);
+            panel2.Location = new Point(0, 1023);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1274, 16);
+            panel2.Size = new Size(1820, 27);
             panel2.TabIndex = 1;
             panel2.Paint += panel2_Paint;
             // 
@@ -199,11 +207,11 @@ namespace ProjectOOP
             // 
             pic.BackColor = Color.White;
             pic.Location = new Point(0, 0);
-            pic.Margin = new Padding(2);
             pic.Name = "pic";
-            pic.Size = new Size(1272, 565);
+            pic.Size = new Size(1817, 942);
             pic.TabIndex = 2;
             pic.TabStop = false;
+            pic.Click += pic_Click;
             pic.MouseClick += pic_MouseClick;
             pic.MouseDown += pic_MouseDown;
             pic.MouseMove += pic_MouseMove;
@@ -214,21 +222,19 @@ namespace ProjectOOP
             canvasPanel.BackColor = SystemColors.ControlDarkDark;
             canvasPanel.Controls.Add(pic);
             canvasPanel.Dock = DockStyle.Fill;
-            canvasPanel.Location = new Point(0, 66);
-            canvasPanel.Margin = new Padding(2);
+            canvasPanel.Location = new Point(0, 110);
             canvasPanel.Name = "canvasPanel";
-            canvasPanel.Size = new Size(1274, 569);
+            canvasPanel.Size = new Size(1820, 913);
             canvasPanel.TabIndex = 3;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1274, 651);
+            ClientSize = new Size(1820, 1050);
             Controls.Add(canvasPanel);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Margin = new Padding(2);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ooPaint";
@@ -255,5 +261,6 @@ namespace ProjectOOP
         private Button rect_btn;
         private Button circle_btn;
         private Button Exit_btn;
+        private Button Fill_btn;
     }
 }

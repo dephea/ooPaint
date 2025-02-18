@@ -11,7 +11,7 @@ namespace ProjectOOP
 
         private Graphics g;
         private myCanvas myCanvas;
-        private Tool tool, pencil, eraser, rectangle, circle;
+        private Tool tool, pencil, eraser, rectangle, circle, bucketFill;
         //private Pencil pencil;
         //private Eraser eraser;
         //private Rectangle rectangle;
@@ -39,6 +39,7 @@ namespace ProjectOOP
             eraser = new Eraser(5);
             rectangle = new Rectangle(Color.Green, 5);
             circle = new Circle(Color.DarkBlue, 5);
+            bucketFill = new BucketFill(Color.DarkCyan);
             tool = pencil;
 
             //pic.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -51,6 +52,7 @@ namespace ProjectOOP
             Utils.SetupButtonImage(eraserBtn, eraserBtn.Image);
             Utils.SetupButtonImage(rect_btn, rect_btn.Image);
             Utils.SetupButtonImage(circle_btn, circle_btn.Image);
+            Utils.SetupButtonImage(Fill_btn, Fill_btn.Image);
 
             this.SizeChanged += Window_SizeChanged;
 
@@ -85,12 +87,14 @@ namespace ProjectOOP
             eraser = new Eraser(5);
             rectangle = new Rectangle(Color.Green, 5);
             circle = new Circle(Color.DarkBlue, 5);
+            bucketFill = new BucketFill(Color.DarkCyan);
             tool = pencil;
 
             Utils.SetupButtonImage(cursor, cursor.Image);
             Utils.SetupButtonImage(eraserBtn, eraserBtn.Image);
             Utils.SetupButtonImage(rect_btn, rect_btn.Image);
             Utils.SetupButtonImage(circle_btn, circle_btn.Image);
+            Utils.SetupButtonImage(Fill_btn, Fill_btn.Image);
 
             this.SizeChanged += Window_SizeChanged;
 
@@ -151,7 +155,10 @@ namespace ProjectOOP
                 tempGraphics = Graphics.FromImage(tempBitmap);
                 tempGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             }
-            else
+            else if (tool is ProjectOOP.BucketFill)
+            {
+                tool.Draw(g, currentPoint, currentPoint, myCanvas.bitmap);
+            } else 
             {
                 tool.Draw(g, currentPoint, currentPoint);
             }
@@ -276,6 +283,7 @@ namespace ProjectOOP
 
             Tool tool;
 
+            //looks bad but its fine
             if (action.title == "Pencil")
             {
                 tool = new Pencil(action.color, action.width);
@@ -291,6 +299,13 @@ namespace ProjectOOP
             else if (action.title == "Circle")
             {
                 tool = new Circle(action.color, action.width);
+            }
+            else if (action.title == "BucketFill")
+            {
+                tool = new BucketFill(action.color);
+                tool.Draw(g, action.start, action.end, myCanvas.bitmap);
+                pic.Refresh();
+                return;
             }
             else
             {
@@ -336,6 +351,19 @@ namespace ProjectOOP
             {
                 Application.Exit();
             }
+        }
+
+        private void Fill_btn_Click(object sender, EventArgs e)
+        {
+            tool = bucketFill;
+            currentToolLabel.Text = "Bucket Fill";
+            color.BackColor = bucketFill.color;
+            Debug.WriteLine("You clicked on the Bucket Fill tool");
+        }
+
+        private void pic_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

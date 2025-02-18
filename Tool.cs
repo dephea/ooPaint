@@ -14,6 +14,11 @@ namespace ProjectOOP
             pen = new Pen(this.color, this.width);
         }
 
+        public Tool(Color color) {
+            this.color = color;
+            pen = new Pen(this.color);
+        }
+
         public void SetColor(Color color) {
             this.color = color;
             pen.Color = this.color;
@@ -26,5 +31,8 @@ namespace ProjectOOP
         }
 
         public abstract void Draw(Graphics g, Point start, Point end);
+
+        // for bucketfill
+        public abstract void Draw(Graphics g, Point start, Point end, Bitmap bitmap);
     }
 }
